@@ -1,0 +1,217 @@
+mysql> create database 5CS3_B2_COLLEGE;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> use  5CS3_B2_COLLEGE;
+Database changed
+mysql> create table STUDENT(USN varchar(15) primary key,SName varchar(15),Address varchar(15),Phone int(10),Gender varchar(10));
+Query OK, 0 rows affected (1.77 sec)
+
+mysql> create table SEMSEC(SSID int(10) primary key,Sem varchar(15),Sec varchar(4)); 
+Query OK, 0 rows affected (0.29 sec)
+
+mysql> create table CLASS(USN varchar(15),foreign key(USN) references STUDENT(USN) on delete cascade on update cascade,SSID int(10),foreign key(SSID) references SEMSEC(SSID) on delete cascade on update cascade);
+Query OK, 0 rows affected (0.89 sec)
+
+mysql> create table COURSE(Subcode varchar(15) primary key,Title varchar(15),Sem varchar(15),Credits int(4));
+Query OK, 0 rows affected (0.38 sec)
+
+mysql> create table IAMARKS(USN varchar(15),foreign key(USN) references STUDENT(USN) on delete cascade on update cascade,Subcode varchar(15),foreign key(Subcode) references COURSE(Subcode) on delete cascade on update cascade,SSID int(10),foreign key(SSID) references SEMSEC(SSID) on delete cascade on update cascade,Test1 int(10),Test2 int(10),Test3 int(10),FinalIA int(10));
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> desc STUDENT;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| USN     | varchar(15) | NO   | PRI | NULL    |       |
+| SName   | varchar(15) | YES  |     | NULL    |       |
+| Address | varchar(15) | YES  |     | NULL    |       |
+| Phone   | int(10)     | YES  |     | NULL    |       |
+| Gender  | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.07 sec)
+
+mysql> desc SEMMSEC;
+ERROR 1146 (42S02): Table '5CS3_B2_COLLEGE.SEMMSEC' doesn't exist
+mysql> desc SEMSEC;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| SSID  | int(10)     | NO   | PRI | NULL    |       |
+| Sem   | varchar(15) | YES  |     | NULL    |       |
+| Sec   | varchar(4)  | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc CLASS;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| USN   | varchar(15) | YES  | MUL | NULL    |       |
+| SSID  | int(10)     | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc COURSE;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Subcode | varchar(15) | NO   | PRI | NULL    |       |
+| Title   | varchar(15) | YES  |     | NULL    |       |
+| Sem     | varchar(15) | YES  |     | NULL    |       |
+| Credits | int(4)      | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc IAMARKS;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| USN     | varchar(15) | YES  | MUL | NULL    |       |
+| Subcode | varchar(15) | YES  | MUL | NULL    |       |
+| SSID    | int(10)     | YES  | MUL | NULL    |       |
+| Test1   | int(10)     | YES  |     | NULL    |       |
+| Test2   | int(10)     | YES  |     | NULL    |       |
+| Test3   | int(10)     | YES  |     | NULL    |       |
+| FinalIA | int(10)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> insert into STUDENT values("1BI15CS100","Ram","Bangalore",23456,"Male");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into STUDENT values("1BI15CS101","Riya","Goa",23455,"Female");
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into STUDENT values("1BI15CS152","Priya","Punjab",23454,"Female");
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into STUDENT values("1BI17CS200","Laxman","Delhi",23453,"Male");
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into STUDENT values("1BI19CS184","Guru","Mangalore",23452,"Female");
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into SEMSEC values(10,8,"A");
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into SEMSEC values(20,8,"B");
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into SEMSEC values(25,8,"C");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into SEMSEC values(9,4,"C");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into SEMSEC values(6,2,"B");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into CLASS values("1BI15CS100",10);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into CLASS values("1BI15CS101",20);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into CLASS values("1BI15CS152",25);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into CLASS values("1BI17CS200",9);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into CLASS values("1BI19CS184",6);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into COURSE values(81,"DS",8,4);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into COURSE values(82,"OS",8,3);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into COURSE values(83,"ME",8,2);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into COURSE values(45,"OOC",4,3);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into COURSE values(22,"Chemistry",2,4);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select *from STUDENT;
++------------+--------+-----------+-------+--------+
+| USN        | SName  | Address   | Phone | Gender |
++------------+--------+-----------+-------+--------+
+| 1BI15CS100 | Ram    | Bangalore | 23456 | Male   |
+| 1BI15CS101 | Riya   | Goa       | 23455 | Female |
+| 1BI15CS152 | Priya  | Punjab    | 23454 | Female |
+| 1BI17CS200 | Laxman | Delhi     | 23453 | Male   |
+| 1BI19CS184 | Guru   | Mangalore | 23452 | Female |
++------------+--------+-----------+-------+--------+
+5 rows in set (0.04 sec)
+
+mysql> select *from SEMSEC;
++------+------+------+
+| SSID | Sem  | Sec  |
++------+------+------+
+|    6 | 2    | B    |
+|    9 | 4    | C    |
+|   10 | 8    | A    |
+|   20 | 8    | B    |
+|   25 | 8    | C    |
++------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select *from CLASS;
++------------+------+
+| USN        | SSID |
++------------+------+
+| 1BI15CS100 |   10 |
+| 1BI15CS101 |   20 |
+| 1BI15CS152 |   25 |
+| 1BI17CS200 |    9 |
+| 1BI19CS184 |    6 |
++------------+------+
+5 rows in set (0.00 sec)
+
+mysql> select *from COURSE;
++---------+-----------+------+---------+
+| Subcode | Title     | Sem  | Credits |
++---------+-----------+------+---------+
+| 22      | Chemistry | 2    |       4 |
+| 45      | OOC       | 4    |       3 |
+| 81      | DS        | 8    |       4 |
+| 82      | OS        | 8    |       3 |
+| 83      | ME        | 8    |       2 |
++---------+-----------+------+---------+
+5 rows in set (0.00 sec)
+mysql> insert into IAMARKS values("1BI15CS100",'81','10','17','18','20','19');
+Query OK, 1 row affected (0.41 sec)
+
+mysql> insert into IAMARKS values("1BI15CS100",'82','10','15','17','19','18');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into IAMARKS values("1BI15CS100",'83','10','16','14','15','16');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into IAMARKS values("1BI15CS101",'81','20','12','15','19','17');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into IAMARKS values("1BI15CS101",'82','20','11','17','18','18');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into IAMARKS values("1BI15CS101",'83','20','10','10','15','12');
+Query OK, 1 row affected (0.07 sec)
+mysql> insert into IAMARKS values("1BI15CS152",'81','25','16','18','19','19');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into IAMARKS values("1BI15CS152",'82','25','18','17','20','19');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into IAMARKS values("1BI15CS152",'83','25','18','17','18','18');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into IAMARKS values("1BI17CS200",'45','9','18','18','19','19');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into IAMARKS values("1BI19CS184",'22','6','16','17','20','19');
+Query OK, 1 row affected (0.05 sec)
+
